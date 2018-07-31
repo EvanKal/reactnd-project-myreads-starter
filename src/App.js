@@ -7,7 +7,6 @@ import Bookshelf from "./Bookshelf"
 class BooksApp extends React.Component {
   state = {
     allBooksList: [],
-    allShelves: ["Currently Reading", "Want to Read", "Read"],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -29,11 +28,26 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
       <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-              <div className="list-books-content">
-              </div>
+        <div className="list-books-title">
+          <h1>MyReads</h1>
+        </div>
+        <div className="list-books-content">
+          <Bookshelf
+            nameOfShelf="Currently Reading"
+            booksInShelf={this.state.allBooksList.filter((book) => book.shelf === "currentlyReading")}
+          />
+          <Bookshelf
+            nameOfShelf="Want to Read"
+            booksInShelf={this.state.allBooksList.filter((book) => book.shelf === "wantToRead")}
+          />
+          <Bookshelf
+            nameOfShelf="Read"
+            booksInShelf={this.state.allBooksList.filter((book) => book.shelf === "read")}
+          />
+        </div>
+        <div className="open-search">
+          <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+        </div>
       </div>
       </div>
 
