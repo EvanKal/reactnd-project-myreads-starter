@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Bookshelf from "./Bookshelf"
+import BookSearch from "./BookSearch"
 
 
 class BooksApp extends React.Component {
@@ -20,15 +21,22 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
   BooksAPI.getAll().then((allBooksList) => {
-    console.log(allBooksList);
     this.setState({ allBooksList });
-    // console.log(this.state);
+    console.log(this.state.allBooksList);
   })
 }
 
+  changeStateToFalse = () => {
+    console.log("hi");
+    this.setState({showSearchPage: false});
+  }
+
   render() {
+    console.log(this.state.showSearchPage)
     return (
       <div className="app">
+      <Route exact path='/'  render={() =>
+      (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
@@ -48,9 +56,16 @@ class BooksApp extends React.Component {
           />
         </div>
         <div className="open-search">
-          <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+          <Link to="/search" onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>
         </div>
       </div>
+      )}/>
+      <Route path='/search' render={({ history }) => (
+        <BookSearch
+        onChangeStateToFalse={this.changeStateToFalse}
+        />
+
+      )}/>
       </div>
 
 
