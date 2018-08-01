@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BookshelfBooks from "./BookshelfBooks"
+import BookSearchGrid from "./BookSearchGrid"
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
-import * as BooksAPI from './BooksAPI'
 
 
 
@@ -15,35 +15,53 @@ class BookSearch extends React.Component {
 
     allBooksInSearch: [],
 
-    query: ""
+    query: "",
+
+    searchTerms: ['Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball', 'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook', 'Cricket', 'Cycling', 'Desai', 'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education', 'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror', 'Hugo', 'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery', 'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Programming', 'React', 'Redux', 'River', 'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS']
 
   }
 
-componentDidUpdate() {
+  // newSearchRequest = (query) => {
+  //     BooksAPI.search(query).then((allBooksInSearch) => {
+  //     this.setState({ allBooksInSearch })
+  //   })
+  // }
 
-
-}
-
-  newSearchRequest = (query) => {
-      BooksAPI.search(query).then((allBooksInSearch) => {
-      this.setState({ allBooksInSearch })
+  turnSearchTermsToUp = () => {
+    return this.state.searchTerms.map((elem) => {
+      return elem.toUpperCase();
     })
   }
 
+  returnValidSearchTerm = () => {
+    let sTerms = this.turnSearchTermsToUp();
+    if (sTerms.includes(this.state.query.toUpperCase())) {
+      return this.state.query.toUpperCase();
+    }
+  }
+
   updateQuery = (query) => {
-  this.setState({ query: query.trim() })
+  this.setState({ query: query })
 }
 
 clearQuery = () => {
   this.setState({ query: '' })
 }
 
+
   render() {
     const { onChangeStateToFalse } = this.props
-    const { query,allBooksInSearch } = this.state
+    const { query,allBooksInSearch,searchTerms } = this.state
 
-    console.log(this.state.allBooksInSearch)
     console.log(this.state.query)
+
+    // let sTerms = this.turnSearchTermsToUp();
+    // console.log(sTerms);
+    // console.log(query.toUpperCase());
+
+    // if(sTerms.includes(query.toUpperCase())) {
+    //   // this.newSearchRequest(query);
+    // }
 
 
     return (
@@ -57,35 +75,12 @@ clearQuery = () => {
             type="text"
             placeholder="Search by title or author"
             value={query}
-            onChange={(event) => {this.updateQuery(event.target.value); if(query !== '') {this.newSearchRequest(query);} else {this.state.allBooksInSearch=[];}}}
+            onChange={(event) => {this.updateQuery(event.target.value); }}
             />
 
           </div>
         </div>
-        <div className="search-books-results">
-          <ol className="books-grid">
-          {allBooksInSearch.map((book) => (
-            <li key={book.id}>
-              <div className="book">
-                <div className="book-top">
-                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                    <div className="book-shelf-changer">
-                      <select>
-                        <option value="move" disabled>Move to...</option>
-                        <option value="currentlyReading">Currently Reading</option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors}</div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <BookSearchGrid queryToRequest={this.returnValidSearchTerm()}/>
       </div>
     )
   }

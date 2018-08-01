@@ -22,7 +22,7 @@ class BooksApp extends React.Component {
   componentDidMount() {
   BooksAPI.getAll().then((allBooksList) => {
     this.setState({ allBooksList });
-    console.log(this.state.allBooksList);
+    // console.log(this.state.allBooksList);
   })
 }
 
@@ -32,7 +32,7 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    console.log(this.state.showSearchPage)
+    // console.log(this.state.showSearchPage)
     return (
       <div className="app">
       <Route exact path='/'  render={() =>
