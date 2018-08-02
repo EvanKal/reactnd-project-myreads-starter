@@ -22,12 +22,12 @@ class BooksApp extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.showSearchPage !== this.state.showSearchPage && this.state.showSearchPage == false) {
-      console.log("SearchUpdate")
-  BooksAPI.getAll().then((allBooksList) => {
-    this.setState({
-    allBooksList: allBooksList,  bookShelfUpdated: false});
-  })}
+  //   if (prevState.showSearchPage !== this.state.showSearchPage && this.state.showSearchPage == false) {
+  //     console.log("SearchUpdate")
+  // BooksAPI.getAll().then((allBooksList) => {
+  //   this.setState({
+  //   allBooksList: allBooksList,  bookShelfUpdated: false});
+  // })}
     if(prevState.bookShelfUpdated !== this.state.bookShelfUpdated && this.state.bookShelfUpdated == true) {
       console.log("BookUpdate")
     BooksAPI.getAll().then((allBooksList) => {
@@ -47,7 +47,7 @@ class BooksApp extends React.Component {
 
   changeStateToFalse = () => {
     console.log("hi");
-    this.setState({showSearchPage: false});
+    // this.setState({showSearchPage: false});
   }
 
   changeStateToFalseForUpdate = () => {
@@ -84,7 +84,7 @@ class BooksApp extends React.Component {
           />
         </div>
         <div className="open-search">
-          <Link to="/search" onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>
+          <Link to="/search"}>Add a book</Link>
         </div>
       </div>
       )}/>

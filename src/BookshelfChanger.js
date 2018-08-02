@@ -45,7 +45,7 @@ requestUpdate = (book, shelf) => {
 }
 
 changeShelf = (e) => {
-  this.setState({bookShelfUpdated: true})
+  // this.setState({bookShelfUpdated: true})
   let selectedShelf = e.target.value;
   this.requestUpdate(this.props.bookObj, selectedShelf);
 
