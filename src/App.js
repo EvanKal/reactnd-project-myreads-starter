@@ -5,6 +5,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Bookshelf from "./Bookshelf"
 import BookSearch from "./BookSearch"
+import BookshelfChanger from "./BookshelfChanger"
 
 
 class BooksApp extends React.Component {
