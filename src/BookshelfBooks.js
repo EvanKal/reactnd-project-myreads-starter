@@ -10,27 +10,30 @@ class BookshelfBooks extends React.Component {
   }
 
   render() {
-    const { booksInShelf } = this.props
+    const { booksInShelf, bookShelfUpdated } = this.props
+
 
     return (
       <div className="bookshelf-books">
         <ol className="books-grid">
-        {booksInShelf.map((book) => (
+        {booksInShelf.map((book) => {
+          let bookBeingMapped = book;
+          return (
           <li key={book.id}>
             <div className="book">
               <div className="book-top">
               {book.imageLinks && (
                 <div className="book-cover" style={{width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
                 )}
-                {book.shelf && (
-                <BookshelfChanger currentBook={book.id} currentShelf={book.shelf}/>
-                )}
+                <BookshelfChanger
+                bookShelfUpdated={bookShelfUpdated}
+                bookObj={bookBeingMapped} currentBook={book.id} currentShelf={book.shelf}/>
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
               </div>
             </li>
-          ))}
+          )})}
           </ol>
       </div>
     )

@@ -7,40 +7,60 @@ class BookshelfChanger extends React.Component {
 
   state = {
 
-
   }
 
 idEscStr = () => {
   let id2 = `id${this.props.currentBook}`;
-  // let escpstrng1 = id2.replace(/\d/g , "a");
-  // let escpstrng2 = escpstrng1.replace(/-/g , "b");
   return id2
 }
 
 selectOption = () => {
+  if(this.props.currentShelf) {
     let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
     let selected1 = selectElem.querySelector(`[value=${this.props.currentShelf}]`);
-    console.log("HEY", selected1)
-    selected1.setAttribute("selected", "selected");
-    // debugger;
-    // // let selectElem = document.querySelector("li" [this.key=this.props.currentBook]);
-}
+    selected1.setAttribute("selected", "");
+}else {
+  let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
+  let selected1 = selectElem.querySelector(`[value=none]`);
+  selected1.setAttribute("selected", "selected");
+
+}}
 
 componentDidMount() {
   this.selectOption();
 }
 
+// componentDidUpdate() {
+//   if (this.state.bookShelfUpdated !== false) {
+//   this.setState({bookShelfUpdated: false});
+// }
+// }
+
+
+requestUpdate = (book, shelf) => {
+  BooksAPI.update(book, shelf).then((response) => {
+    this.props.bookShelfUpdated();
+    console.log("UpdateResponse", response)
+  })
+}
+
+changeShelf = (e) => {
+  this.setState({bookShelfUpdated: true})
+  let selectedShelf = e.target.value;
+  this.requestUpdate(this.props.bookObj, selectedShelf);
+
+}
+
+
 
 render () {
-  const { currentShelf,currentBook } = this.props
-
-
+  const { bookObj,currentShelf,currentBook, } = this.props
 
   return (
     <div className="book-shelf-changer">
-      <select name={this.idEscStr()}>
-        <option value="move" disabled>Move to...</option>
-        <option value="currentlyReading">Currently Reading</option>
+      <select name={this.idEscStr()} onChange={this.changeShelf}>
+        <option value="move" disabled >Move to...</option>
+        <option value="currentlyReading" >Currently Reading</option>
         <option value="wantToRead">Want to Read</option>
         <option value="read">Read</option>
         <option value="none">None</option>

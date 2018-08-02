@@ -17,12 +17,30 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    showSearchPage: false,
+    bookShelfUpdated: false
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.showSearchPage !== this.state.showSearchPage && this.state.showSearchPage == false) {
+      console.log("SearchUpdate")
+  BooksAPI.getAll().then((allBooksList) => {
+    this.setState({
+    allBooksList: allBooksList,  bookShelfUpdated: false});
+  })}
+    if(prevState.bookShelfUpdated !== this.state.bookShelfUpdated && this.state.bookShelfUpdated == true) {
+      console.log("BookUpdate")
+    BooksAPI.getAll().then((allBooksList) => {
+      this.setState({allBooksList: allBooksList,  bookShelfUpdated: false});
+
+    })
+
+    // console.log(this.state.allBooksList);
+  }
+}
   componentDidMount() {
   BooksAPI.getAll().then((allBooksList) => {
-    this.setState({ allBooksList });
+    this.setState({ allBooksList: allBooksList});
     // console.log(this.state.allBooksList);
   })
 }
@@ -30,6 +48,12 @@ class BooksApp extends React.Component {
   changeStateToFalse = () => {
     console.log("hi");
     this.setState({showSearchPage: false});
+  }
+
+  changeStateToFalseForUpdate = () => {
+    console.log("YASSSS");
+    this.setState({bookShelfUpdated: true});
+    console.log(this.state.bookShelfUpdated)
   }
 
   render() {
@@ -44,14 +68,17 @@ class BooksApp extends React.Component {
         </div>
         <div className="list-books-content">
           <Bookshelf
+            bookShelfUpdated={this.changeStateToFalseForUpdate}
             nameOfShelf="Currently Reading"
             booksInShelf={this.state.allBooksList.filter((book) => book.shelf === "currentlyReading")}
           />
           <Bookshelf
+            bookShelfUpdated={this.changeStateToFalseForUpdate}
             nameOfShelf="Want to Read"
             booksInShelf={this.state.allBooksList.filter((book) => book.shelf === "wantToRead")}
           />
           <Bookshelf
+            bookShelfUpdated={this.changeStateToFalseForUpdate}
             nameOfShelf="Read"
             booksInShelf={this.state.allBooksList.filter((book) => book.shelf === "read")}
           />
@@ -63,6 +90,7 @@ class BooksApp extends React.Component {
       )}/>
       <Route path='/search' render={({ history }) => (
         <BookSearch
+        bookShelfUpdated={this.changeStateToFalseForUpdate}
         onChangeStateToFalse={this.changeStateToFalse}
         />
 

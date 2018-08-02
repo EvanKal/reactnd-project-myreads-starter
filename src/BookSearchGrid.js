@@ -49,7 +49,7 @@ componentDidUpdate(prevProps, prevState) {
 // })}
 
 render() {
-  const { queryToRequest } = this.props
+  const { queryToRequest,bookShelfUpdated } = this.props
   const { booksArray } = this.state
 
   console.log(`Books displayed:`, booksArray)
@@ -68,6 +68,7 @@ return (
   <div className="search-books-results">
     <ol className="books-grid">
     {booksArray.map((book) => {
+      let bookBeingMapped = book;
       return (
       <li key={book.id}>
         <div className="book">
@@ -75,7 +76,9 @@ return (
           {book.imageLinks && (
             <div className="book-cover" style={{width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
             )}
-              <BookshelfChanger />
+              <BookshelfChanger
+              bookShelfUpdated={bookShelfUpdated}
+              bookObj={bookBeingMapped} currentBook={book.id} currentShelf={book.shelf}/>
             </div>
             <div className="book-title">{book.title}</div>
             <div className="book-authors">{book.authors}</div>

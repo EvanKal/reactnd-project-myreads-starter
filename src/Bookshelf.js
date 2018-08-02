@@ -10,21 +10,24 @@ class Bookshelf extends React.Component {
   }
 
   render() {
-    const { nameOfShelf,booksInShelf } = this.props
+    const { nameOfShelf,booksInShelf,bookShelfUpdated } = this.props
     const {  } = this.state
 
-    console.log(booksInShelf);
+    console.log(nameOfShelf, booksInShelf);
 
     return (
       <div>
         <div className="bookshelf">
           <h2 className="bookshelf-title">{nameOfShelf}</h2>
-          <BookshelfBooks booksInShelf={booksInShelf}/>
-        </div>
-      </div>
-    )
-  }
+          <BookshelfBooks
+          bookShelfUpdated={bookShelfUpdated}
+          booksInShelf={booksInShelf}
+          />
+                  </div>
+                </div>
+              )
+            }
 
-}
+          }
 
 export default Bookshelf;

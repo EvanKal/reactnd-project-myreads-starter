@@ -50,7 +50,7 @@ clearQuery = () => {
 
 
   render() {
-    const { onChangeStateToFalse } = this.props
+    const { onChangeStateToFalse,bookShelfUpdated } = this.props
     const { query,allBooksInSearch,searchTerms } = this.state
 
     console.log(this.state.query)
@@ -80,7 +80,9 @@ clearQuery = () => {
 
           </div>
         </div>
-        <BookSearchGrid queryToRequest={this.returnValidSearchTerm()}/>
+        <BookSearchGrid
+        bookShelfUpdated={bookShelfUpdated}
+        queryToRequest={this.returnValidSearchTerm()}/>
       </div>
     )
   }
