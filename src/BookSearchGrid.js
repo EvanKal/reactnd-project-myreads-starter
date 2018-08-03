@@ -15,7 +15,11 @@ class BookSearchGrid extends React.Component {
   }
 
 componentDidUpdate(prevProps, prevState) {
-  if(this.props.queryToRequest && this.props.queryToRequest !== prevProps.queryToRequest ) {
+
+  if(this.props.queryToRequest && this.props.queryToRequest !== prevProps.queryToRequest) {
+  if(document.readyState === "complete") {
+      BooksAPI.controller.abort()
+    }
   console.log("hi");
   BooksAPI.search(this.props.queryToRequest)
   .then((allBooksInSearch) => {
