@@ -17,9 +17,6 @@ class BookSearchGrid extends React.Component {
 componentDidUpdate(prevProps, prevState) {
 
   if(this.props.queryToRequest && this.props.queryToRequest !== prevProps.queryToRequest) {
-  if(document.readyState === "complete") {
-      BooksAPI.controller.abort()
-    }
   console.log("hi");
   BooksAPI.search(this.props.queryToRequest)
   .then((allBooksInSearch) => {
@@ -65,7 +62,7 @@ render() {
   const { queryToRequest,bookShelfUpdated } = this.props
   const { booksArray } = this.state
 
-  console.log(`Books displayed:`, booksArray)
+  console.log(`RT! Books displayed:`, booksArray)
   // console.log(`Books displayed:`, booksArray.map((elem) => {
   // return JSON.stringify(elem);}).join())
   console.log(`Prop query:`, queryToRequest);

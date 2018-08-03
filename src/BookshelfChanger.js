@@ -15,8 +15,7 @@ class BookshelfChanger extends React.Component {
 //   return id2
 // }
 
-selectOption = () => {
-BooksAPI.get(this.props.currentBook).then((response) => {
+selectOption = (response) => {
   if(response.shelf) {
       let selectElem = document.querySelector(`[name=${this.props.idForSelect}]`);
       let selected1 = selectElem.querySelector(`[value=${response.shelf}]`);
@@ -27,12 +26,75 @@ BooksAPI.get(this.props.currentBook).then((response) => {
     selected1.setAttribute("selected", "selected");
 
   }
-})
+
 }
 
 componentDidMount() {
-  this.selectOption();
-}
+    let currentBook = this.props.currentBook
+
+  BooksAPI.get(currentBook).then((response) => {
+  console.log("resolving");
+  return response;
+  // resolve;
+}).then((response) => {
+  this.selectOption(response);
+}).catch((error) => {
+  console.log(error)
+})}
+
+// componentDidMount() {
+//   const selOpt = this.selectOption;
+//   const AbortController = window.AbortController;
+//   const controller = new AbortController()
+//   const signal = controller.signal
+//   let currentBook = this.props.currentBook
+//   let newPromise = new Promise (function (resolve, reject) {
+// console.log("New Promise on the way")
+//   BooksAPI.get(currentBook, signal).then((response) => {
+//   console.log("resolving");
+//   return response;
+//   // resolve;
+// }).then((response) => {
+//   selOpt(response);
+// }).catch(() => {
+//   controller.abort()
+// })
+//
+// }).catch((error) => {
+//   console.log("rejecting")
+//   // reject;
+// })
+
+// ---------This is SO cool!----------
+// componentDidMount() {
+//   const selOpt = this.selectOption;
+//   const AbortController = window.AbortController;
+//   const controller = new AbortController()
+//   const signal = controller.signal
+//   let currentBook = this.props.currentBook
+//   let newPromise = new Promise (function (resolve, reject) {
+// console.log("New Promise on the way")
+//   BooksAPI.get(currentBook, signal).then((response) => {
+//   console.log("resolving");
+//   return response;
+//   // resolve;
+// }).then((response) => {
+//   console.log("getting select option for response", response)
+//   selOpt(response);
+// }).catch(() => {
+//   console.log("ERROR")
+// })
+//
+// }).catch((error) => {
+//   console.log("rejecting")
+//   controller.abort()
+//   // reject;
+// })
+// return newPromise;
+// }
+
+
+
 
 // componentDidUpdate() {
 //   if (this.state.bookShelfUpdated !== false) {
