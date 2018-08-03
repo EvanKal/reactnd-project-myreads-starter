@@ -11,51 +11,34 @@ import BookshelfChanger from "./BookshelfChanger"
 class BooksApp extends React.Component {
   state = {
     allBooksList: [],
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    // showSearchPage: false,
     bookShelfUpdated: false
   }
 
-  componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.showSearchPage !== this.state.showSearchPage && this.state.showSearchPage == false) {
-  //     console.log("SearchUpdate")
-  // BooksAPI.getAll().then((allBooksList) => {
-  //   this.setState({
-  //   allBooksList: allBooksList,  bookShelfUpdated: false});
-  // })}
+//Allows rerendering only when the bookShelfUpdated "switch" changes to true and not back to false,
+// so that a second rendering is prevented. When that happens the updated book list gets fetched
+componentDidUpdate(prevProps, prevState) {
     if(prevState.bookShelfUpdated !== this.state.bookShelfUpdated && this.state.bookShelfUpdated == true) {
-      console.log("BookUpdate")
     BooksAPI.getAll().then((allBooksList) => {
       this.setState({allBooksList: allBooksList,  bookShelfUpdated: false});
 
     })
   }
 }
-  componentDidMount() {
+
+//Gets books when page loads
+componentDidMount() {
   BooksAPI.getAll().then((allBooksList) => {
     this.setState({ allBooksList: allBooksList});
-    // console.log(this.state.allBooksList);
   })
 }
 
-  // changeStateToFalse = () => {
-  //   console.log("hi");
-  //   // this.setState({showSearchPage: false});
-  // }
-
+//Acts like a switch for rerendering when a book has its shelf changed on the main page
+//This function is passed all the way down to the BookshelfChanger from where it gets called
   changeStateToFalseForUpdate = () => {
-    console.log("YASSSS");
     this.setState({bookShelfUpdated: true});
-    console.log(this.state.bookShelfUpdated)
   }
 
   render() {
-    // console.log(this.state.showSearchPage)
     return (
       <div className="app">
       <Route exact path='/'  render={() =>

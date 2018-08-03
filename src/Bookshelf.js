@@ -12,9 +12,6 @@ class Bookshelf extends React.Component {
   render() {
     const { nameOfShelf,booksInShelf,bookShelfUpdated } = this.props
     const {  } = this.state
-
-    console.log(nameOfShelf, booksInShelf);
-
     return (
       <div>
         <div className="bookshelf">

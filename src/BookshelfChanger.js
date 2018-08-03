@@ -9,12 +9,8 @@ class BookshelfChanger extends React.Component {
 
   }
 
-// idEscStr = () => {
-//   let id2 = `id${this.props.currentBook}`;
-//   console.log("ChangedID");
-//   return id2
-// }
-
+//Sets the select element's option to selected according to the book's shelf
+//If there is no shelf then it sets it to none
 selectOption = (response) => {
   if(response.shelf) {
       let selectElem = document.querySelector(`[name=${this.props.idForSelect}]`);
@@ -29,89 +25,30 @@ selectOption = (response) => {
 
 }
 
+//Since the books on the main page and on the search page get fetched from different urls,
+//if a book is placed on a shelf, this info must be retrieved from the main page url, when it's BookshelfChanger
+// component mounts. In the case of the search page, new fetches try to be rendered with every key press
+// and so catching the errors is essential in order to prevent the page from breaking, thus letting the latest fetch render
 componentDidMount() {
     let currentBook = this.props.currentBook
 
   BooksAPI.get(currentBook).then((response) => {
-  console.log("resolving");
   return response;
-  // resolve;
 }).then((response) => {
   this.selectOption(response);
 }).catch((error) => {
-  console.log(error)
+  return;
 })}
 
-// componentDidMount() {
-//   const selOpt = this.selectOption;
-//   const AbortController = window.AbortController;
-//   const controller = new AbortController()
-//   const signal = controller.signal
-//   let currentBook = this.props.currentBook
-//   let newPromise = new Promise (function (resolve, reject) {
-// console.log("New Promise on the way")
-//   BooksAPI.get(currentBook, signal).then((response) => {
-//   console.log("resolving");
-//   return response;
-//   // resolve;
-// }).then((response) => {
-//   selOpt(response);
-// }).catch(() => {
-//   controller.abort()
-// })
-//
-// }).catch((error) => {
-//   console.log("rejecting")
-//   // reject;
-// })
 
-// ---------This is SO cool!----------
-// componentDidMount() {
-//   const selOpt = this.selectOption;
-//   const AbortController = window.AbortController;
-//   const controller = new AbortController()
-//   const signal = controller.signal
-//   let currentBook = this.props.currentBook
-//   let newPromise = new Promise (function (resolve, reject) {
-// console.log("New Promise on the way")
-//   BooksAPI.get(currentBook, signal).then((response) => {
-//   console.log("resolving");
-//   return response;
-//   // resolve;
-// }).then((response) => {
-//   console.log("getting select option for response", response)
-//   selOpt(response);
-// }).catch(() => {
-//   console.log("ERROR")
-// })
-//
-// }).catch((error) => {
-//   console.log("rejecting")
-//   controller.abort()
-//   // reject;
-// })
-// return newPromise;
-// }
-
-
-
-
-// componentDidUpdate() {
-//   if (this.state.bookShelfUpdated !== false) {
-//   this.setState({bookShelfUpdated: false});
-// }
-// }
-
-
+// Updates the book's info by adding a shelf property and setting it's value to the selected shelf
 requestUpdate = (book, shelf) => {
   BooksAPI.update(book, shelf).then((response) => {
     this.props.bookShelfUpdated();
-    console.log("UpdateResponse", response)
   })
 }
 
 changeShelf = (e) => {
-  // this.setState({bookShelfUpdated: true})
   let selectedShelf = e.target.value;
   this.requestUpdate(this.props.bookObj, selectedShelf);
 

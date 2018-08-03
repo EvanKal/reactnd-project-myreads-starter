@@ -21,11 +21,6 @@ class BookSearch extends React.Component {
 
   }
 
-  // newSearchRequest = (query) => {
-  //     BooksAPI.search(query).then((allBooksInSearch) => {
-  //     this.setState({ allBooksInSearch })
-  //   })
-  // }
 
   turnSearchTermsToUp = () => {
     return this.state.searchTerms.map((elem) => {
@@ -33,6 +28,8 @@ class BookSearch extends React.Component {
     })
   }
 
+//Checks if query string is a valid string for search matching any of the search terms
+//whole or part of them
   returnValidSearchTerm = () => {
     let sTerms = this.turnSearchTermsToUp();
     let test = (str) => {
@@ -55,16 +52,6 @@ clearQuery = () => {
   render() {
     const { onChangeStateToFalse,bookShelfUpdated } = this.props
     const { query,allBooksInSearch,searchTerms } = this.state
-
-    console.log(this.state.query)
-
-    // let sTerms = this.turnSearchTermsToUp();
-    // console.log(sTerms);
-    // console.log(query.toUpperCase());
-
-    // if(sTerms.includes(query.toUpperCase())) {
-    //   // this.newSearchRequest(query);
-    // }
 
 
     return (
