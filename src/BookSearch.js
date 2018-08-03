@@ -35,7 +35,10 @@ class BookSearch extends React.Component {
 
   returnValidSearchTerm = () => {
     let sTerms = this.turnSearchTermsToUp();
-    if (sTerms.includes(this.state.query.toUpperCase())) {
+    let test = (str) => {
+      return str.startsWith(this.state.query.toUpperCase());
+    }
+    if (sTerms.some(test)) {
       return this.state.query.toUpperCase();
     }
   }

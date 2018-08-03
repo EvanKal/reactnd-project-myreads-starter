@@ -15,12 +15,18 @@ class BookSearchGrid extends React.Component {
   }
 
 componentDidUpdate(prevProps, prevState) {
-  if(this.props.queryToRequest && this.props.queryToRequest !== prevProps.queryToRequest) {
+  if(this.props.queryToRequest && this.props.queryToRequest !== prevProps.queryToRequest ) {
   console.log("hi");
   BooksAPI.search(this.props.queryToRequest)
   .then((allBooksInSearch) => {
+    allBooksInSearch.map((elem) => {
+      let id2 = `id${elem.id}`;
+      elem.id = id2;
+      console.log("ChangedID to:", id2);
+
+    })
   this.setState({ booksArray: allBooksInSearch })
-  })
+}})
   } else if(!this.props.queryToRequest && this.state.booksArray.length !== 0) {
   this.setState({ booksArray: [] })
 }

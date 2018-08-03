@@ -11,20 +11,24 @@ class BookshelfChanger extends React.Component {
 
 idEscStr = () => {
   let id2 = `id${this.props.currentBook}`;
+  console.log("ChangedID");
   return id2
 }
 
 selectOption = () => {
-  if(this.props.currentShelf) {
+BooksAPI.get(this.props.currentBook).then((response) => {
+  if(response.shelf) {
+      let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
+      let selected1 = selectElem.querySelector(`[value=${response.shelf}]`);
+      selected1.setAttribute("selected", "");
+  }else {
     let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
-    let selected1 = selectElem.querySelector(`[value=${this.props.currentShelf}]`);
-    selected1.setAttribute("selected", "");
-}else {
-  let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
-  let selected1 = selectElem.querySelector(`[value=none]`);
-  selected1.setAttribute("selected", "selected");
+    let selected1 = selectElem.querySelector(`[value=none]`);
+    selected1.setAttribute("selected", "selected");
 
-}}
+  }
+})
+}
 
 componentDidMount() {
   this.selectOption();
