@@ -18,6 +18,8 @@ class BookshelfBooks extends React.Component {
         <ol className="books-grid">
         {booksInShelf.map((book) => {
           let bookBeingMapped = book;
+          let id2 = `id${book.id}`;
+
           return (
           <li key={book.id}>
             <div className="book">
@@ -27,7 +29,7 @@ class BookshelfBooks extends React.Component {
                 )}
                 <BookshelfChanger
                 bookShelfUpdated={bookShelfUpdated}
-                bookObj={bookBeingMapped} currentBook={book.id} currentShelf={book.shelf}/>
+                bookObj={bookBeingMapped} currentBook={book.id} idForSelect={id2} currentShelf={book.shelf}/>
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>

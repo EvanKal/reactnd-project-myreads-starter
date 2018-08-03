@@ -9,20 +9,20 @@ class BookshelfChanger extends React.Component {
 
   }
 
-idEscStr = () => {
-  let id2 = `id${this.props.currentBook}`;
-  console.log("ChangedID");
-  return id2
-}
+// idEscStr = () => {
+//   let id2 = `id${this.props.currentBook}`;
+//   console.log("ChangedID");
+//   return id2
+// }
 
 selectOption = () => {
 BooksAPI.get(this.props.currentBook).then((response) => {
   if(response.shelf) {
-      let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
+      let selectElem = document.querySelector(`[name=${this.props.idForSelect}]`);
       let selected1 = selectElem.querySelector(`[value=${response.shelf}]`);
       selected1.setAttribute("selected", "");
   }else {
-    let selectElem = document.querySelector(`[name=${this.idEscStr()}]`);
+    let selectElem = document.querySelector(`[name=${this.props.idForSelect}]`);
     let selected1 = selectElem.querySelector(`[value=none]`);
     selected1.setAttribute("selected", "selected");
 
@@ -58,11 +58,11 @@ changeShelf = (e) => {
 
 
 render () {
-  const { bookObj,currentShelf,currentBook, } = this.props
+  const { bookObj,currentShelf,currentBook,idForSelect } = this.props
 
   return (
     <div className="book-shelf-changer">
-      <select name={this.idEscStr()} onChange={this.changeShelf}>
+      <select name={idForSelect} onChange={this.changeShelf}>
         <option value="move" disabled >Move to...</option>
         <option value="currentlyReading" >Currently Reading</option>
         <option value="wantToRead">Want to Read</option>

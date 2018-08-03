@@ -19,18 +19,21 @@ componentDidUpdate(prevProps, prevState) {
   console.log("hi");
   BooksAPI.search(this.props.queryToRequest)
   .then((allBooksInSearch) => {
-    allBooksInSearch.map((elem) => {
-      let id2 = `id${elem.id}`;
-      elem.id = id2;
-      console.log("ChangedID to:", id2);
-
-    })
   this.setState({ booksArray: allBooksInSearch })
-}})
-  } else if(!this.props.queryToRequest && this.state.booksArray.length !== 0) {
+})}
+  else if(!this.props.queryToRequest && this.state.booksArray.length !== 0) {
   this.setState({ booksArray: [] })
-}
-}
+}}
+
+// OVER HEEEEEEEEEEEEEEEEEEERE
+// let newallBooksInSearch = allBooksInSearch.map((elem) => {
+//   let id2 = `id${elem.id}`;
+//   elem.id = id2;
+//   console.log("ChangedID to:", id2);
+//   return elem;
+// })
+// OVER HEEEEEEEEEEEEEEEEEEERE
+
 
 // escapeSpecialCharacters(array) {
 //   return this.state.booksArray.map((elem) => {
@@ -75,6 +78,8 @@ return (
     <ol className="books-grid">
     {booksArray.map((book) => {
       let bookBeingMapped = book;
+      let id2 = `id${book.id}`;
+
       return (
       <li key={book.id}>
         <div className="book">
@@ -84,7 +89,7 @@ return (
             )}
               <BookshelfChanger
               bookShelfUpdated={bookShelfUpdated}
-              bookObj={bookBeingMapped} currentBook={book.id} currentShelf={book.shelf}/>
+              bookObj={bookBeingMapped} currentBook={book.id} idForSelect={id2} currentShelf={book.shelf}/>
             </div>
             <div className="book-title">{book.title}</div>
             <div className="book-authors">{book.authors}</div>
